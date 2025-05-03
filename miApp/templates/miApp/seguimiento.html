@@ -90,15 +90,26 @@
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-      var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
-      document.getElementById("checkout-button").addEventListener("click", function () {
-        fetch("/create-checkout-session/?id_reparacion={{ reparacion.id }}")
-          .then(response => response.json())
-          .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
-          .catch(error => console.error("Error:", error));
+  var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+
+  document.getElementById("checkout-button").addEventListener("click", function () {
+    fetch("/create-checkout-session/?id_reparacion={{ reparacion.id }}")
+      .then(response => response.json())
+      .then(session => {
+        console.log("Stripe session:", session);  // 👈 VERIFICACIÓN
+
+        if (session.id) {
+          stripe.redirectToCheckout({ sessionId: session.id });
+        } else {
+          alert("Error al crear la sesión de pago: " + (session.error || "Error desconocido"));
+        }
+      })
+      .catch(error => {
+        console.error("Error al hacer fetch:", error);
+        alert("Hubo un error al contactar con el servidor.");
       });
-    </script>
-  </section>
+  });
+</script>
   {% endif %}
  
 {% elif id_reparacion %}
