@@ -26,17 +26,7 @@
                 <td>{{ r.dispositivo.cliente.nombre }} {{ r.dispositivo.cliente.apellido }}</td>
                 <td>{{ r.dispositivo.marca }} {{ r.dispositivo.modelo }}</td>
                 <td>{{ r.empleado.first_name }} {{ r.empleado.last_name }}</td>
-                <td>
-                    {% if r.estado == "Diágnostico" %}
-                        <span style="background-color: #4db6ac; color: white; padding: 0.3rem 0.6rem; border-radius: 20px; font-size: 0.85rem;">{{ r.estado }}</span>
-                    {% elif r.estado == "Pendiente Aprobación" %}
-                        <span style="background-color: #ffb74d; color: white; padding: 0.3rem 0.6rem; border-radius: 20px; font-size: 0.85rem;">{{ r.estado }}</span>
-                    {% elif r.estado == "Entrega" %}
-                        <span style="background-color: #81c784; color: white; padding: 0.3rem 0.6rem; border-radius: 20px; font-size: 0.85rem;">{{ r.estado }}</span>
-                    {% else %}
-                        {{ r.estado }}
-                    {% endif %}
-                </td>
+                <td>{{ r.estado }}</td> <!-- Sin color ni formato especial -->
                 <td>{{ r.fecha_ingreso|date:"d/m/Y" }}</td>
                 <td style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <a href="{% url 'reparacion_detalle' r.id %}" 
