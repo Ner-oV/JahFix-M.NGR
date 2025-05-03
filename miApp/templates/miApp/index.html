@@ -1,0 +1,49 @@
+{% extends 'miApp/base.html' %}
+
+{% block content %}
+
+<div class="auth-buttons">
+
+</div>
+<section class="hero">
+    <div class="text">
+        <h1>Reparaciones rápidas y confiables para tu dispositivo móvil</h1>
+        
+        <a href="/cotizacion/" class="btn-cotizacion">Cotiza tu reparación</a>
+    </div>
+</section>
+
+<section class="caracteristicas">
+    <div class="card">
+        <h3>🔧 Profesionales de confianza</h3>
+        <p>Confía en nuestro equipo de técnicos profesionales. Contamos con una red de expertos listos para ayudarte.</p>
+    </div>
+    <div class="card">
+        <h3>⚡ Respuesta rápida</h3>
+        <p>Nuestro objetivo es devolverte tu dispositivo lo más rápido posible.</p>
+    </div>
+    <div class="card">
+        <h3>🩺 Diagnóstico gratis</h3>
+        <p>No te preocupes, te ofrecemos un diagnóstico sin costo.</p>
+    </div>
+</section>
+
+<h2 class="titulo-reparaciones">Todo tipo de reparaciones</h2>
+
+<section class="reparaciones">
+    <div class="card"><img src="/static/img/icono-iphone.png" alt="iPhone"><p>Pantallas agrietadas, daños por agua, batería y más.</p></div>
+    <div class="card"><img src="/static/img/icono-ipad.png" alt="iPad"><p>Pantallas rotas, batería y software.</p></div>
+    <div class="card"><img src="/static/img/icono-android.png" alt="Android"><p>Reemplazos de placas base y más.</p></div>
+    <div class="card"><img src="/static/img/icono-tablet.png" alt="Tablet"><p>Soluciones rápidas para tablets.</p></div>
+    
+</section>
+
+<section class="hero1">
+    <h3>¡Repara tu dispositivo móvil hoy mismo!</h3>
+    <p>Reparamos el mismo día en la mayoría de los casos.</p>
+    <a href="/cotizacion/" class="btn-cotizacion">Cotiza tu reparación</a>
+</section>
+
+<!-- Botón flotante para Vista Empleado -->
+
+{% endblock %}

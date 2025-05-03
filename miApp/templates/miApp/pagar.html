@@ -1,0 +1,20 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<button id="checkout-button">Pagar</button>
+
+<script>
+var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+
+document.getElementById('checkout-button').addEventListener('click', function () {
+    fetch("/create-checkout-session/", { method: "POST" })
+    .then(function (response) { return response.json(); })
+    .then(function (session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function (result) {
+        if (result.error) {
+            alert(result.error.message);
+        }
+    });
+});
+</script>

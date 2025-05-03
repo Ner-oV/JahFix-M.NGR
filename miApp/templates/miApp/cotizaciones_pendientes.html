@@ -1,0 +1,131 @@
+{% block content %}
+<section class="cotizaciones-section">
+    <div class="cotizaciones-container">
+        <h1 class="cotizaciones-title">Cotizaciones Pendientes</h1>
+        <table class="cotizaciones-table">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Dispositivo</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cotizacion in cotizaciones %}
+                <tr>
+                    <td>{{ cotizacion.cliente.nombre }}</td>
+                    <td>{{ cotizacion.dispositivo.marca }} {{ cotizacion.dispositivo.modelo }}</td>
+                    <td>{{ cotizacion.estado }}</td>
+                    <td><a href="{% url 'responder_cotizacion' cotizacion.id %}" class="btn-cotizacion">Responder</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<style>
+    /* Estilos globales aplicados */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fc;
+        color: #333;
+    }
+
+    .cotizaciones-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 3rem 1rem;
+    }
+
+    .cotizaciones-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 1200px;
+        padding: 2rem;
+        overflow-x: auto;
+        border-left: 5px solid #6a9cdb; /* Color azul */
+        border-right: 5px solid #fdbd6c; /* Color naranja */
+    }
+
+    .cotizaciones-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #6a9cdb; /* Azul */
+        margin-bottom: 2rem;
+        text-align: center;
+        background: linear-gradient(to right, #6a9cdb, #fdbd6c); /* Degradado en el título */
+        padding: 0.5rem;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .cotizaciones-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
+
+    .cotizaciones-table th,
+    .cotizaciones-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .cotizaciones-table th {
+        background-color: #52ab98; /* Verde */
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .cotizaciones-table tr:nth-child(even) {
+        background-color: #f1f1f1;
+    }
+
+    .cotizaciones-table tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .cotizaciones-table tr:hover {
+        background-color: #e8f5e9; /* Hover verde claro */
+    }
+
+    .cotizaciones-table a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        background-color: #6a9cdb; /* Azul */
+        border: 1px solid #6a9cdb;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .cotizaciones-table a:hover {
+        background-color: #fdbd6c; /* Naranja */
+        color: #333;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+        .cotizaciones-container {
+            padding: 1.5rem;
+        }
+
+        .cotizaciones-title {
+            font-size: 1.8rem;
+        }
+
+        .cotizaciones-table th, .cotizaciones-table td {
+            padding: 0.8rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización - JahFix</title>
+    <link rel="stylesheet" href="{% static 'miApp/css/style.css' %}">
+    <style>
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #52AB98;
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            background-color: #f4f7fb;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .form-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #0F3E44;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .cotizacion-form p {
+            margin-bottom: 1.5rem;
+        }
+
+        .cotizacion-form input, .cotizacion-form select, .cotizacion-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .cotizacion-form input:focus, .cotizacion-form select:focus, .cotizacion-form textarea:focus {
+            border-color: #0F3E44;
+            outline: none;
+        }
+
+        .submit-btn {
+            background-color: #0F3E44;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #81c784;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .form-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{% url 'index' %}" class="logo logo-link">
+        <img src="{% static 'miApp/img/logo.png' %}" alt="Logo JahFix" class="logo-icon">
+        <span>JahFix Manager</span>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="{% url 'sobre_nosotros' %}">Sobre nosotros</a></li>
+            <li><a href="{% url 'contactanos' %}">Contáctanos</a></li>
+            <li><a href="{% url 'condiciones' %}">Condiciones</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+<section class="hero">
+    <div class="text">
+        <h1>Crear Cotización</h1>
+        <p>Complete el siguiente formulario para generar una cotización para el cliente.</p>
+    </div>
+</section>
+
+<section class="form-section">
+    <div class="form-container">
+        <h2 class="form-title">Formulario de Cotización</h2>
+        <form method="POST" class="cotizacion-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-btn">Enviar Cotización</button>
+        </form>
+    </div>
+</section>
+</main>
+
+<footer>
+    &copy; © 2025 JahFix. Todos los derechos reservados.
+</footer>
+
+</body>
+</html>

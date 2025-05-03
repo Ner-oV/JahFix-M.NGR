@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos - JahFix</title>
+    <link rel="stylesheet" href="{% static 'miApp/css/style.css' %}">
+    <style>
+        .contact-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 40px 20px;
+        }
+      
+        .contact-form {
+          width: 100%;
+          max-width: 600px;
+          background-color: #f9f9f9;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+      
+        .contact-form h2 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+      
+        .form-group {
+          margin-bottom: 15px;
+        }
+      
+        .form-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+      
+        .form-group input,
+        .form-group textarea {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+      
+        .contact-form button {
+          display: block;
+          width: 100%;
+          padding: 12px;
+          background-color: #007bff;
+          color: white;
+          font-size: 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      
+        .contact-form button:hover {
+          background-color: #0056b3;
+        }
+      </style>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{% url 'index' %}" class="logo logo-link">
+    <img src="{% static 'miApp/img/logo.png' %}" alt="Logo JahFix" class="logo-icon">
+    <span>JahFix Manager</span>
+</a>
+    <nav>
+        <ul>
+            
+            <li><a href="{% url 'sobre_nosotros' %}">Sobre nosotros</a></li>
+            <li><a href="{% url 'contactanos' %}">Contáctanos</a></li>
+            <li><a href="{% url 'condiciones' %}">Condiciones</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="center-wrapper">
+    <section class="contact-section">
+        <div class="contact-info">
+            <h2>Información de contacto</h2>
+            <div class="info-box">
+                <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+                <p><strong>Email:</strong> contacto@jahfix.cl</p>
+                <p><strong>Dirección:</strong> Av. Innovación 1234, Santiago, Chile</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Ingresa tus datos para comunicarnos contigo</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+                </div>
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; © 2025 JahFix. Todos los derechos reservados.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends 'miApp/base.html' %}
+{% block content %}
+
+<style>
+  .form-seguimiento {
+    display: flex;
+    flex-direction: column; /* disposición vertical */
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .form-seguimiento input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .form-seguimiento button {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #52AB98;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-seguimiento button:hover {
+    background-color: #3e8e7e;
+  }
+</style>
+
+<section class="hero">
+  <form method="GET" class="form-seguimiento">
+    <input name="id_reparacion" value="{{ id_reparacion }}" placeholder="Ingrese el ID de reparación" required>
+    <button>Consultar</button>
+  </form>
+</section>
+
+{% if reparacion %}
+  <section class="hero1" style="text-align:center;">
+    <h3>Estado de tu reparación (ID: {{ reparacion.id }})</h3>
+    <p><em>estado actual = "{{ reparacion.estado }}"</em></p>
+
+    {% for etapa in etapas %}
+    <div style="margin-bottom: 15px;">
+      <p><strong>{{ etapa.etapa.nombre_etapa }}</strong></p>
+      
+      {% if etapa.comentarios %}
+        <p style="margin-left: 10px;">📝 Comentarios del técnico: {{ etapa.comentarios }}</p>
+      {% endif %}
+      
+      
+      <hr style="margin-top: 10px;">
+    </div>
+  {% empty %}
+    <p>No hay etapas registradas aún.</p>
+  {% endfor %}
+  
+  </section>
+
+  {% if reparacion.estado == "Pendiente Aprobación" %}
+  <section class="hero" style="text-align: center;">
+    <p><strong>¡Tu reparación está pendiente de aprobación!</strong></p>
+
+    <div style="display: flex; justify-content: center; gap: 20px;">
+      <button id="checkout-button" style="background-color: #28a745; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;">
+        Aprobar y Pagar
+      </button>
+
+      <button onclick="document.getElementById('form-rechazo').style.display='block'" style="background-color: #dc3545; color: white; padding: 12px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;">
+        Rechazar reparación
+      </button>
+    </div>
+
+    <form method="GET" id="form-rechazo" style="margin-top: 20px; display: none;">
+      <input type="hidden" name="id_reparacion" value="{{ reparacion.id }}">
+      <input type="hidden" name="accion" value="rechazar">
+      <textarea name="razon_rechazo" rows="4" cols="50" placeholder="Escribe tu razón para rechazar la reparación" style="border-radius: 8px; padding: 10px;"></textarea><br>
+      <button type="submit" style="margin-top: 10px; background-color: #dc3545; color: white; padding: 12px 20px; border: none; border-radius: 4px;">Confirmar rechazo</button>
+    </form>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+      document.getElementById("checkout-button").addEventListener("click", function () {
+        fetch("/create-checkout-session/?id_reparacion={{ reparacion.id }}")
+          .then(response => response.json())
+          .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+          .catch(error => console.error("Error:", error));
+      });
+    </script>
+  </section>
+  {% endif %}
+ 
+{% elif id_reparacion %}
+  <p style="color:red; text-align:center;">No se encontró una reparación con ese ID.</p>
+{% endif %}   
+
+
+{% endblock %}

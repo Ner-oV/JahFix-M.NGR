@@ -1,0 +1,14 @@
+{% extends "miApp/base1.html" %}
+
+{% block title %}Reporte de Reparaciones - {{ empleado.nombre }}{% endblock %}
+
+{% block content %}
+<h1>Detalle reporte de Reparaciones PDF</h1>
+
+
+
+<!-- Enlace para descargar el reporte como PDF -->
+<a href="{% url 'reportepdf' empleado.id %}" class="btn btn-primary">Descargar como PDF</a>
+
+{% endblock %}
+

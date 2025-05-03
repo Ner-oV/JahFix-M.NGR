@@ -1,0 +1,165 @@
+{% extends "miApp/base1.html" %}
+{% block title %}Dashboard - JahFix Manager{% endblock %}
+
+{% block content %}
+<section class="dashboard-cards">
+    <div class="card">
+        <div class="card-icon"><i class="ri-briefcase-line"></i></div>
+        <div class="card-number">{{ total_reparaciones }}</div>
+        <div class="card-label">Reparaciones asignadas</div>
+    </div>
+    <div class="card">
+        <div class="card-icon"><i class="ri-loader-4-line"></i></div>
+        <div class="card-number">{{ en_proceso }}</div>
+        <div class="card-label">En proceso</div>
+    </div>
+    <div class="card">
+        <div class="card-icon"><i class="ri-checkbox-circle-line"></i></div>
+        <div class="card-number">{{ completadas }}</div>
+        <div class="card-label">Completadas</div>
+    </div>
+    <div class="card">
+        <div class="card-icon"><i class="ri-notification-3-line"></i></div>
+        <div class="card-number">{{ total_notificaciones }}</div>
+        <div class="card-label">Notificaciones</div>
+    </div>
+</section>
+
+<section class="dashboard-table">
+    <h2 class="section-title">Reparaciones recientes</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Dispositivo</th>
+                    <th>Estado</th>
+                    <th>Fecha ingreso</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reparacion in reparaciones_recientes %}
+                <tr>
+                    <td>{{ reparacion.id }}</td>
+                    <td>{{ reparacion.dispositivo.cliente.nombre }} {{ reparacion.dispositivo.cliente.apellido }}</td>
+                    <td>{{ reparacion.dispositivo.marca }} {{ reparacion.dispositivo.modelo }}</td>
+                    <td>
+                        {% if reparacion.estado == "En proceso" %}
+                            <span class="badge badge-process">{{ reparacion.estado }}</span>
+                        {% elif reparacion.estado == "Pendiente" %}
+                            <span class="badge badge-pending">{{ reparacion.estado }}</span>
+                        {% elif reparacion.estado == "Completada" %}
+                            <span class="badge badge-completed">{{ reparacion.estado }}</span>
+                        {% else %}
+                            {{ reparacion.estado }}
+                        {% endif %}
+                    </td>
+                    <td>{{ reparacion.fecha_ingreso|date:"d/m/Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 1rem;">No hay reparaciones recientes.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<style>
+    .dashboard-cards {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+    .card {
+        flex: 1;
+        min-width: 200px;
+        background-color: #0F3E44;
+        color: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .card-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    .card-label {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        margin-bottom: 1rem;
+        color: #0F3E44;
+        font-weight: bold;
+    }
+    
+    .table-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    thead {
+        background-color: #E3EAEA;
+    }
+    th, td {
+        padding: 0.75rem;
+        text-align: left;
+    }
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: white;
+    }
+    .badge-process {
+        background-color: #4db6ac;
+    }
+    .badge-pending {
+        background-color: #ffb74d;
+    }
+    .badge-completed {
+        background-color: #81c784;
+    }
+    
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+        .dashboard-cards {
+            flex-direction: column;
+        }
+        .card {
+            width: 100%;
+        }
+        table {
+            font-size: 0.9rem;
+        }
+        .section-title {
+            font-size: 1.2rem;
+        }
+    }
+    </style>
+{% endblock %}
