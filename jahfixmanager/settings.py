@@ -15,6 +15,9 @@ ALLOWED_HOSTS = ['*']
 # Clave API de SendGrid
 BREVO_API_KEY = config('BREVO_API_KEY')
 
+# BASE_URL
+BASE_URL = os.getenv('BASE_URL', 'http://localhost:8000')  
+
 # Aplicaciones
 INSTALLED_APPS = [
     'django.contrib.admin',

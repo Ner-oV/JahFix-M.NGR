@@ -14,6 +14,7 @@ from django.urls import reverse
 from django.utils.timezone import localtime
 from django.core.mail import send_mail
 from django.db import connection
+import os
 
 # Librería externa
 import sib_api_v3_sdk
@@ -36,6 +37,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 from io import BytesIO
+
 TEMPLATE_REPARACIONES = 'miApp/reparaciones.html'
 
 def reportepdf(request, empleado_id):
@@ -195,12 +197,17 @@ def reparacion_detalle(request, id):
 
 
 #API Pago
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 @csrf_exempt
 def create_checkout_session(request):
     try:
         id_reparacion = request.GET.get('id_reparacion')
+
+        # BASE_URL
+        BASE_URL = os.getenv('BASE_URL', 'http://localhost:8000')
+
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
@@ -214,8 +221,8 @@ def create_checkout_session(request):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=f'http://localhost:8000/success/?id_reparacion={id_reparacion}',
-            cancel_url='http://localhost:8000/cancel/',
+            success_url=f'{BASE_URL}/success/?id_reparacion={id_reparacion}',
+            cancel_url=f'{BASE_URL}/cancel/',
         )
         return JsonResponse({'id': session.id})
     except Exception as e:
